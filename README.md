@@ -1,2 +1,2 @@
 # ITM352_S21_repo
-New class repo
+New class repo.
