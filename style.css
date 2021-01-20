@@ -1,0 +1,23 @@
+
+body {
+    font-size: 1.5em;
+    background-color: #ccc;
+    margin: 20px;
+    padding: 40px;
+    font-weight: bolder;
+    color: navy;
+    font-family: arial, helvetica, sans-serif;
+    text-align: center;
+
+}
+a {color:rgb(255, 0, 170);}
+h2 {
+    border-style: dashed;
+    border-width: 3px;
+    border-left-width: 50px;
+    border-right-width: 50px;
+    border-color: rgb(255, 0, 200);
+}
+p {
+    line-height: 40px;
+}
