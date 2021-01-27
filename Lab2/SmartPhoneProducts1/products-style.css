@@ -15,8 +15,9 @@ main {display: flex;
 img {width: 200px; height: 200px;}
 
 /* Typography */  
-h1,h2 {text-align: center}
-
+h1,h2 {text-align: center;
+    }
+p {font-weight: 900;}
  
 /* Styling the products display */ 
     div {border: 5px solid black;
