@@ -1,0 +1,14 @@
+h1, h2 {
+    font-family: "Oswald", sans;
+}
+body {
+    font-family: "Open-Sans", sans;
+    color: yellow;
+    margin: 10 px 50px 10px 50px;
+    width: 950px;
+    background-color: black;
+}
+img {
+    margin-right: 10px;
+}
+td {width: 300px; vertical-align: top;}
