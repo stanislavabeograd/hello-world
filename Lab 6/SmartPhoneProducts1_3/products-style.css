@@ -1,0 +1,39 @@
+/* General */  
+body {
+    width: 800px; margin: 0 auto;
+    background-image: url("./Images/raindrop.jpg"); 
+    background-repeat: no-repeat;
+    background-position: center;
+     
+}
+/* block styling */  
+main {display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    }
+    
+img {width: 200px; height: 200px;}
+
+/* Typography */  
+h1,h2 {text-align: center;
+    }
+p {font-weight: 900;}
+ 
+/* Styling the products display */ 
+    div {border: 5px solid black;
+    display: flex;}
+
+    .rotate img
+    {
+      animation: rotation .3s infinite linear;
+    }
+    
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(359deg);
+      }
+    }
+       
