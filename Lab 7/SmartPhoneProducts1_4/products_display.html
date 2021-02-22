@@ -32,7 +32,10 @@
         spins = 0; 
         x = 0;
         h_s.toFixed(2);
-        var over_half = false;
+        var over_half = false
+        if ((hits/spins >= 0.5) && (hits < spins)) 
+           {over_half = true;} ;
+
         </script>
         Hits:<span id="hits_span">0</span>;
         Spins:<span id="spins_span">0</span>;
@@ -44,22 +47,17 @@
     <div>
         <main>
         <section class="item" 
-        onmouseover=
-        "spins_span.innerHTML= ++spins; 
+        onmouseover="
+        spins_span.innerHTML = ++spins; 
         this.className = 'item rotate';
         hit_spin_span.innerHTML = x.toFixed(2); 
-        x = hits_span.innerHTML/spins_span.innerHTML;
-        win_span.innerHTML = (hits/spins >= 0.5);
-        "
+        x = hits_span.innerHTML/spins_span.innerHTML;"
         
     onclick= 
-       "hits++; 
+       "++hits; 
         hits_span.innerHTML = hits; 
         this.className = 'item';
-        win_span.innerHTML = ( (hits/spins >= 0.5) && (hits < spins)`);
-        " 
-            >
-            
+        win_span.innerHTML = over_half; "
 
                 <h2>HTC</h2>
                 <p> $ 40.00 </p>
