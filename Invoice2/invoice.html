@@ -7,9 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-
-
-
     
     <script>
     /* This is an excercise on how to learn to code an invoice.
@@ -17,37 +14,48 @@
      // Product 1
      var item1 = 'Gillette Sensor 3 Razor';
      var quantity1 = 2;
-     var price1 = 1.23;
+     var price1 = 0;
      extended_price1 = price1 * quantity1; // compute extended prices
 
     // Product 2
      var item2 = 'Barbasol Shaving Cream';
      var quantity2 = 1;
-     var price2 = 2.64;
+     var price2 = 0;
      extended_price2 = price2 * quantity2;
     // Product 3
      var item3 = 'Nautica Cologne';
      var quantity3 = 1;
-     var price3 = 6.17;
+     var price3 = 0;
      extended_price3 = price3 * quantity3;
     // Product 4
      var item4 = 'Rubbing Alcohol';
      var quantity4 = 3;
-     var price4 = 0.98;
+     var price4 = 0;
      extended_price4 = price4 * quantity4;
     // Product 5
      var item5 = 'Colgate Classic Toothbrush';
      var quantity5 = 12;
-     var price5 = 1.89;
+     var price5 = 0;
      extended_price5 = price5 * quantity5;
 
      subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4 + extended_price5; // computing the subtotal of extended prices
+    
      tax = subtotal * 0.0575; //this is the tax of 5.75%
-     total = subtotal + tax;
+     
 
-   </script>
-
-
+    // shipping statment
+     if(subtotal > 0 && subtotal < 50)
+        {shipping = 2;}
+     else if(subtotal >= 50 && subtotal < 100)
+        {shipping = 5;}
+     else if(subtotal >= 100)
+        {shipping = subtotal * 0.05;}
+     else 
+        {shipping = 0;}
+  
+    //total rpice
+    total = subtotal + tax + shipping; 
+  </script>
    
    <script>
    
@@ -101,6 +109,9 @@
       <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span></td>
       <td width="54%">$${tax.toFixed(2)}</td> 
     </tr>
+    <tr>
+      <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Shipping</span></td>
+      <td width="54%">$${shipping.toFixed(2)}</td> 
     </tr>
     <tr>
       <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
@@ -112,6 +123,12 @@
   `);
 
    </script>
-    
+    <p>
+     <b>OUR SHIPPING POLICY IS:A subtotal $0 - $49.99 will be $2 shipping<br>
+      A subtotal $50 - $99.99 will be $5 shipping<br>
+      Subtotals over $100 will be charged 5% of the subtotal amount</b>
+      
+
+    </p>
 </body>
 </html>
