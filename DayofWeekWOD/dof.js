@@ -25,15 +25,16 @@ myYear = 1983;
 
 //  algorithm
 
-var step1 = myYear - 1;
-if (month = ['January', 'February']) 
-        {year - 2;}
+var step1 = myYear;
+if ([myMonth == 'January' || myMonth == 'February']) 
+        {step1 = myYear - 1;}
+
 
 var step2 = parseInt (step1/4) + step1;
 var step3 = step2 - parseInt(step1/100);
 var step4 = step3 + parseInt (step1/400);
 var step5 = myDate + step4;
-var step6 = monthKey['September'] + step5;
+var step6 = monthKey[myMonth] + step5;
 var step7 = step6%7;
 
 console.log(day[step7]);
