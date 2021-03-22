@@ -1,6 +1,6 @@
 
-attributes  =  "Stasa; 37; -36.5; CIS";
-pieces = attributes.split (";");
+var attributes  =  "Stasa; 37; -36.5; CIS";
+var pieces = attributes.split (";");
 
 function isNonNegInt(q, returnErrors = false) //this function checks whether the item in array is a whole number or not.
 {
@@ -11,14 +11,29 @@ function isNonNegInt(q, returnErrors = false) //this function checks whether the
     return returnErrors ? errors : (errors.length == 0);
 }
 
-for (i=0; i<= attributes.length; i++){
-    console.log(pieces);
-}
-   
-{
-function checkIt() { 
-    console.log(`part ${i} is ${(isNonNegInt(pieces[i])?'a':'not a')} quantity`);
-}
+function checkIt(item, index) { 
+    // console.log(`part ${index} is ${(isNonNegInt(pieces[item])?'a':'not a')} quantity`);
+    console.log(`part ${index} is ${(isNonNegInt(item)?'a':'not a')} quantity`);
 }
 
-pieces.forEach(checkIt);
+// pieces.forEach(checkIt);
+pieces.forEach( (item, index) => console.log(`part ${index} is ${(isNonNegInt(item)?'a':'not a')} quantity`));
+
+var monthly_sales = [125, 200, 199, 499];
+var tax_rate = 0.04;
+
+function calculateTaxesOwed(sales, tax){
+    var tax_owing = [];
+
+}
+
+function calculateTaxesOwed(sales, tax){
+    var tax_owing = [];
+    for (var i = 0; i < sales.length; i++) {
+        tax_owing.push(sales[i]*tax);
+    }
+    return tax_owing;
+}
+
+var tax_owing = calculateTaxesOwed(monthly_sales, tax_rate);
+console.log(tax_owing);

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone Products</title>
+    <link rel="stylesheet" href="products-style.css">
+    <script src ="professors.js">
+
+    </script>
+</head>
+<body>
+    
+    <h1>Stranght of Ties with CIS Professors Calculator</h1>
+    <div><main>
+<script>
+
+    for (i=0; i <= professors.length; i++)
+        {document.write(`  
+            <section class="item">
+                    <h2>${professors[i].name}</h2>
+                    <p> ${professors[i].affiliation}</p>
+                    <p> Department: ${professors[i].department}</p>
+                    <p> Research topics: ${professors[i].research_area}</p> 
+                   
+                </section>
+                `);
+        };
+//<img src=${products[i].image}> 
+</script>
+
+
+
+</main></div> 
+<footer>
+    <h1>Pick a number of classes you took with a professor!</h1>
+</footer>
+    
+</body>
+</html>
