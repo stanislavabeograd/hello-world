@@ -6,28 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smartphone Products</title>
     <link rel="stylesheet" href="products-style.css">
-    <script src ="professors.js">
+    <script src ="./professors.js">
 
     </script>
 </head>
 <body>
     
-    <h1>Stranght of Ties with CIS Professors Calculator</h1>
+    <h1>Stranght of Ties with CIS Professors </h1>
+    <h1>-Calculator-</h1>
     <div><main>
 <script>
 
     for (i=0; i <= professors.length; i++)
         {document.write(`  
             <section class="item">
+                    <img src=${professors[i].image}> 
                     <h2>${professors[i].name}</h2>
                     <p> ${professors[i].affiliation}</p>
                     <p> Department: ${professors[i].department}</p>
-                    <p> Research topics: ${professors[i].research_area}</p> 
+                    <p> Research topics: ${professors[i].research_area}</p>
+                    <br> <hr> 
+                    
                    
                 </section>
                 `);
         };
-//<img src=${products[i].image}> 
+
 </script>
 
 

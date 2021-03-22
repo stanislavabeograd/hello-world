@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="professors.js"></script>
+</head>
+
+<body>
+
+  <script>
+
+
+    document.write(`
+   <table border="2">
+   <tbody>
+    <tr>
+      <th style="text-align: center;" width="43%">Professor</th>
+      <th style="text-align: center;" width="11%">Department</th>
+      <th style="text-align: center;" width="13%">Number of classes</th>
+      <th style="text-align: center;" width="54%">Strenght of tie</th>
+    </tr>
+    `)
+
+    
+
+
+    var i;
+    var quantities = [2, 6, 1, 7.1, "cat", 8];
+    
+    //here I am "calculating" the strenght of ties based on the number of classes a student too with a professor to print them out in invoice
+    
+    var tie;
+
+     if (quantities[i] == 2) {
+         tie = "tie";
+      }
+      else if (quantities[i] >= 3) {
+        tie = "strong tie";
+      }
+ 
+// this is function that makes rows of invoice
+    function generate_item_rows(number_of_classes_array) {
+      for (i in professors) {
+        if (number_of_classes_array[i] == 0) {
+          continue;
+        }
+        else
+          document.write(`
+    <tr>
+      <td width="30%">${professors[i].name}</td>
+      <td width="20%">${professors[i].department}</td>
+      <td align="center" width="11%" >${number_of_classes_array[i]} <br><font color="red"> </font></td>
+      <td width="20%">${tie}</td>
+
+
+    </tr>
+   `)
+
+      }
+    }
+
+    function isNonNegInt(q, returnErrors = false) //this function checks whether the item in array is a whole number or not.
+    {
+      errors = []; // assume no errors at first
+      if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+      if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+      if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+      return returnErrors ? errors : (errors.length == 0);
+    }
+
+    generate_item_rows(quantities);
+
+  </script>
+  </table>
+</body>
+
+</html>

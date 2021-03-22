@@ -1,7 +1,7 @@
 /* General */  
 body {
     width: 800px; margin: 0 auto;
-    background-image: url("./Images/raindrop.jpg"); 
+    background-image: url(""); 
     background-repeat: no-repeat;
     background-position: center;
      
@@ -12,12 +12,12 @@ main {display: flex;
     justify-content: space-around;
     }
     
-img {width: 200px; height: 200px;}
+img {width: 100px; height: 100px; display: block; margin-left: auto; margin-right: auto; }
 
 /* Typography */  
 h1,h2 {text-align: center;
     }
-p {font-weight: 900;}
+p {font-weight: 900; text-align: center}
  
 /* Styling the products display */ 
     div {border: 5px solid black;
