@@ -25,24 +25,31 @@
     </tr>
     `)
 
-    
+
+   //here I am "calculating" the strenght of ties based on the number of classes a student too with a professor to print them out in invoice
 
 
     var i;
     var quantities = [2, 6, 1, 7.1, "cat", 8];
-    
-    //here I am "calculating" the strenght of ties based on the number of classes a student too with a professor to print them out in invoice
-    
-    var tie;
 
-     if (quantities[i] == 2) {
-         tie = "tie";
+    
+
+    for (i=0; i <= quantities.length; i++) {
+
+      if (quantities.i === 1) {
+       var tie = "weak tie";
       }
-      else if (quantities[i] >= 3) {
+      else if (quantities[i] == 2) {
+        tie = "tie";
+      }
+      else if  (quantities[i] >= 3) {
         tie = "strong tie";
       }
- 
-// this is function that makes rows of invoice
+      else {tie = "invalid input"}
+    }
+      
+
+    // this is function that makes rows of invoice
     function generate_item_rows(number_of_classes_array) {
       for (i in professors) {
         if (number_of_classes_array[i] == 0) {
