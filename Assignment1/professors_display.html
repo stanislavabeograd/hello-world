@@ -23,13 +23,14 @@
         <div class="w3-center">
         <h1 class="w3-xxxlarge w3-animate-bottom">STRENGHT OF TIES WITH CIS PROFESSORS</h1>
         <h4>enter the number of classes you took with a professor bellow to calculate strenght of ties with them</h4>
-          <div class="w3-padding-32">
-            <button class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal" onclick="" style="font-weight:900;">CALCULATE</button>
+        <form action="./invoice.html" method="GET"> 
+        <div class="w3-padding-32">
+            <input type ="submit" value = "CALCULATE" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal" style="font-weight:900;">
           </div>
         </div>
       </header>
 
-    <form action="./invoice.html" method="GET">
+  
         <div>
 
 
@@ -52,10 +53,11 @@
                     <h3>${professors[i].name}</h3>
                     <p> ${professors[i].affiliation}</p>
                     <p> <b>Department:</b> <br> ${professors[i].department}</p>
+              
                     <p> <b>Research topics:</b> ${professors[i].research_area}</p>
                     <hr>    
-                    <lable> Enter the number of classes you took with professor: <lable> <br>
-                    <input type= "text" size="10" placeholder="0"  name="quantity${i}"> <br></p>
+                    <lable> Enter the number of classes you took with this professor: <lable> <br>
+                    <input type= "text" size="2" placeholder="0"  name="quantity${i}"> <br></p>
                     <br>               
                 </section>
             </div> 
