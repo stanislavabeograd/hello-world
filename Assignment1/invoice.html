@@ -33,20 +33,22 @@
     var quantities = [2, 6, 1, 7.1, "cat", 8];
 
     
+    for (i=0; i < quantities.length; i++) {
 
-    for (i=0; i <= quantities.length; i++) {
-
-      if (quantities.i === 1) {
-       var tie = "weak tie";
+      if (quantities[i] == 1) {
+      document.getElementById("1").innerHTML = "weak tie";
       }
       else if (quantities[i] == 2) {
-        tie = "tie";
+        document.getElementById("1").innerHTML= "tie";
       }
       else if  (quantities[i] >= 3) {
-        tie = "strong tie";
+        document.getElementById("1").innerHTML = "strong tie";
       }
       else {tie = "invalid input"}
-    }
+
+      console.log(`quantity ${quantities[i]} is a ${tie}`);
+}
+    
       
 
     // this is function that makes rows of invoice
@@ -60,8 +62,9 @@
     <tr>
       <td width="30%">${professors[i].name}</td>
       <td width="20%">${professors[i].department}</td>
-      <td align="center" width="11%" >${number_of_classes_array[i]} <br><font color="red"> </font></td>
-      <td width="20%">${tie}</td>
+      <td align="center" width="11%" >${number_of_classes_array[i]} <br></td>
+      <td align="center" width="11%" id="1" ><br></td>
+      <td width="20%"> </td>
 
 
     </tr>
@@ -80,6 +83,7 @@
     }
 
     generate_item_rows(quantities);
+    a(quantities);
 
   </script>
   </table>
