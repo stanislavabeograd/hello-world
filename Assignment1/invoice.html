@@ -44,7 +44,7 @@
       else if  (quantities[i] >= 3) {
         document.getElementById("1").innerHTML = "strong tie";
       }
-      else {tie = "invalid input"}
+      else {document.getElementById("1").innerHTML = "invalid input"}
 
       console.log(`quantity ${quantities[i]} is a ${tie}`);
 }
