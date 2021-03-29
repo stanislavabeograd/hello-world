@@ -1,10 +1,4 @@
-<script>
-var params = (new URL(document.location)).searchParams;
 
-
-
-
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,16 +6,16 @@ var params = (new URL(document.location)).searchParams;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
     <script>
+        var params = (new URL(document.location)).searchParams;
 
-            if (params.has('quanitity_textbox')){
-               document.body.innerHTML="Thank you for purchasing ${params.get('quanitity_textbox')} ";
-            }
-        
-
+        window.onload = function() {
+        if (params.has('quanitity_textbox')){
+       document.body.innerHTML = `Thank you for ordering ${params.get('quanitity_textbox')}`;
+    }
+}
     </script>
-    
+</head>
+<body> 
 </body>
 </html>

@@ -1,15 +1,3 @@
-
- <script>
-    //this is an object that stores the query string
-    var params = (new URL(document.location)).searchParams;
-
-   //it is testing if there is someting in the texbox, and if so, then display.
-
-        if (params.has('quantity_textbox')) {
-           document.write = `Thank you for purchasing ${params.get('quantity_textbox')} things!`;
-    }
-
-</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab12</title>
-   
 </head>
 
 <body>
@@ -26,7 +13,7 @@
         /*
 // checks what's entered in texbox and prints it in span        
         function checkQuantityTextbox(qtyTexboxObj) {
-            var errs= isNonNegInt(quantity_form.quantity_textbox.value, true);
+            var errs= isNonNegInt(quantity_textbox.value, true);
             qty_textbox_message.innerHTML = errs.join(',');
         }
 
@@ -40,14 +27,23 @@
 
             return returnErrors ? errors : (errors.length == 0);
         }
-        */
+      
+        function displayPurchase(){
+            if (isNonNegInt(quantity_textbox.value))
+               document.body.innerHTML=`Thank you for purchasing ${quantity_textbox.value} things!`;
+        }
+        
+*/
+//onkeyup="checkQuantityTextbox(this)"
+
     </script>
     
-
+    <form name="quantity_form" action="display_purchase.html" onsubmit="GET">
     <label>quantity desired:</label>
     <input type="text" name="quantity_textbox">
     <span id='qty_textbox_message'>Enter a quantity</span>
-    <input type= "button" value="Purchase">
+
+    <input type= "submit" value="Purchase">
 </form>
 </body>
 
