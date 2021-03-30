@@ -3,15 +3,15 @@
   //we get a variable that looks for the search query in URL 
   var params = (new URL(document.location)).searchParams;
 
-   //function looking for non neative int
-   function isNonNegInt(q, returnErrors = false) {
+  //function looking for non neative int
+  function isNonNegInt(q, returnErrors = false) {
     var errors = []; // assume no errors at first
     if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
     if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
     if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
     return returnErrors ? errors : (errors.length == 0);
   }
- 
+
 
 </script>
 <!DOCTYPE html>
@@ -51,16 +51,20 @@
               else if (params.get('quantity_textbox' + i) >= 3) {
                 document.getElementById(i).innerHTML = "strong tie";
               }
-              else {document.getElementById(i).innerHTML = "invalid input" }
             }
           }
         }
 
         // this is function that makes rows of invoice
         function generate_item_rows() {
+          classes_deparment_count = {}; //here is initiated the object that will group all the counts of classes per deparment
           for (var i in professors) {
-            if (isNonNegInt(params.get('quantity_textbox' + i))) //only for those that have inputed valid number of classes
-            {
+            if (params.get('quantity_textbox' + i) > 0) { //only for those that have inputed valid number of classes
+              if (typeof classes_deparment_count[professors[i].department] == "undefined") {//if there is no entry in the texbox, set it to 0
+                classes_deparment_count[professors[i].department] = 0;
+              }
+              classes_deparment_count[professors[i].department] += parseInt(params.get('quantity_textbox' + i)); //add the course numbers up based on the department of the professor
+         //bellow I am looping to print out the form based o the professors object
               document.write(`
               <tr>
                 <td width="30%">${professors[i].name}</td>
@@ -77,10 +81,27 @@
         generate_item_rows(); // here I am calling these functions I made above
         strength_of_ties()
 
+
+
       </script>
   </table>
+  <p>
+  <h3 align="center"> You have taken the follwing number of classes withing these departments: </h3> <br>
+  <h4 align="center">
+    <script>
+
+      //this code loops over the object that counts the number of classes and prints out that count
+      for (dept in classes_deparment_count) {
+        document.write(dept + ":" + classes_deparment_count[dept] + "<br>");
+      }
+    </script>
+  </h4>
+  </p>
+
   <footer>
-    <h3>This calculator shows the strenght of ties with professors you took classes with. This metric will be used to visualize your relationships with different professors, so your peers can ask you for advice when choosing their collaborators.</h3>
+    <h3>This calculator shows the strength of ties with professors you took classes with. This metric will be used to
+      visualize your relationships with different professors, so your peers can ask you for advice when they are deciding
+      on the choice of their collaborators.</h3>
   </footer>
 </body>
 
