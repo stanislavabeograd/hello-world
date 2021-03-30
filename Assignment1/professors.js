@@ -8,3 +8,22 @@ professors = [
 ];
 
 console.log("data loded.")
+
+    //has_errors = false
+    //checks if it's a non neg intiger
+    function isNonNegInt(q, returnErrors = false) {
+        if (q == '') q = 0; //I have added this so the script gives error if you press calculate when not enterying anyhing -> it becomess negative int.
+        var errors = []; // assume no errors at first
+        if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+        if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+        if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+
+        return returnErrors ? errors : (errors.length == 0);
+    }
+
+    //here is a function that will test the input in the texbox and give an alert if it is non neg int, this is how I solve the input check.
+    function checkQuantityTextbox(qtyTexboxObj) {
+        if (!isNonNegInt(qtyTexboxObj.value, returnErrors = false)){
+        document.getElementById(qtyTexboxObj.name+'_message').innerHTML= "error";
+        }
+    }
