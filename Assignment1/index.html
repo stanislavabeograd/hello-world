@@ -28,7 +28,7 @@
             <form action="" method="GET" name="quantity_form">
                 <div class="w3-padding-32">
                     <input type="submit" value="CALCULATE" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal"
-                        style="font-weight:900;" } ">
+                        style="font-weight:900;" name="calculate_submit" } ">
 
                 </div>
         </div>
@@ -72,23 +72,25 @@
 </html>
 <script>
     var params = (new URL(document.location)).searchParams; //looking for the search paramaters
-    var has_errors = false; //setting up the value for errors
-    var has_quantities = false; // setting up the value for the quanities
-    for (var i in professors) {
-        qty = params.get(`quantity_textbox${i}`);
-        quantity_form['quantity_textbox' + i].value = qty; //puts back in the textbox the data from the query
-        checkQuantityTextbox(quantity_form['quantity_textbox' + i]);
-        if (qty > 0) { has_quantities = true; } //showing that the quantities is only if it's bigger than 0
-        if (isNonNegInt(qty) == false) //only for those that have inputed valid number of classes
-        {
-            has_errors = true;
+    if (params.has("calculate_submit")) { // here I check if the button submit was clicked, not to display the alerts each time the page was loaded
+        var has_errors = false; //setting up the value for errors
+        var has_quantities = false; // setting up the value for the quanities
+        for (var i in professors) {
+            qty = params.get(`quantity_textbox${i}`);
+            quantity_form['quantity_textbox' + i].value = qty; //puts back in the textbox the data from the query
+            checkQuantityTextbox(quantity_form['quantity_textbox' + i]);
+            if (qty > 0) { has_quantities = true; } //showing that the quantities is only if it's bigger than 0
+            if (isNonNegInt(qty) == false) //only for those that have inputed valid number of classes
+            {
+                has_errors = true;
+            }
         }
+        if (has_errors == true) {
+            alert("Invalid quantities."); //blocking if the quantities are not correct with alert
+        }
+        else if (has_quantities == false) {
+            alert("Pick some classes quantities!"); //if there is no entry in texboxes
+        }
+        else { window.location.href = "./invoice.html" + location.search } //go to invoice if quantities are correct
     }
-    if (has_errors == true) {
-        alert("Invalid quantities."); //blocking if the quantities are not correct with alert
-    }
-    else if (has_quantities == false) {
-        alert("Pick some classes quantities!"); //if there is no entry in texboxes
-    }
-    else { window.location.href = "./invoice.html" + location.search } //go to invoice if quantities are correct
 </script>
