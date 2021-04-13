@@ -10,7 +10,8 @@
 
 <body>
     <script>
-        /*
+    var params = (new URL(document.location)).searchParams;
+    
 // checks what's entered in texbox and prints it in span        
         function checkQuantityTextbox(qtyTexboxObj) {
             var errs= isNonNegInt(quantity_textbox.value, true);
@@ -33,8 +34,8 @@
                document.body.innerHTML=`Thank you for purchasing ${quantity_textbox.value} things!`;
         }
         
-*/
-//onkeyup="checkQuantityTextbox(this)"
+
+onkeyup="checkQuantityTextbox(this)"
 
     </script>
     
@@ -48,3 +49,10 @@
 </body>
 
 </html>
+<script>
+    
+    if(params.has('quantity_textbox')){
+        quantity_form['quantity_textbox'].value = params.get('quantity_textbox');
+        checkQuantityTexbox(quantity_form['quantity_textbox']);
+    }
+</script>

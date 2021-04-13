@@ -3,6 +3,7 @@ var app = express();
 var myParser = require("body-parser"); //takes a body of the request and creates an object of the data in it (POST data)
 const { response } = require('express');
 app.use(myParser.urlencoded({ extended: true })); //need to add this
+var qs = require('qs');
 
 
 app.all('*', function (request, response, next) {
@@ -22,21 +23,26 @@ app.post('/process_login', function (request, response, next) { //ovo odgovara n
     response.send(post_data);
 });
 */
-app.post('/display_purchase', function (request, response, next) { //ovo odgovara na POST u method u html form
+
+
+app.post('/process_login', function (request, response, next) { //ovo odgovara na POST u method u html form
+   user_data = {'username':'stasa', 'password' : 'car'};
     post_data = request.body; //gets the data form the post in the variable    
-    if(post_data['quantity_texbox']){  //check the username if there is some data
-      the_qty = post_data ['quantity_texbox'];
-             if(isNonNegInt(the_qty)){
-                 response.redirect('invoice.html?quantity_texbox='+the_qty);
+    if(post_data['username']){  //check the username if there is some data
+             user = post_data ['username'];
+             if(user_data['username'] == user){
+                 response.send(`I recognize you ${user}!`);
                  return;
                }  else { 
-                response.redirect('./order_page.html?quantity_texbox='+the_qty); //to return them back to the page, puts it in the query string, check the value in qty_texbox in the server. In login treba da im sacuvas podatke u kucicama, ako nije OK log in. 
+                  response.send(`${user} is not a valid`); //comment out if you want to keep them on the page for the wrong input
+                  //response.redirect('./log_in_page.html?username=' +user); //to return them back to the page, puts it in the query string, check the value in qty_texbox in the server. In login treba da im sacuvas podatke u kucicama, ako nije OK log in. 
                   return;
                }
+             
          }
-});
+    //response.send(JSON.stringify(post_data)); 
+        }); //this responds to post request (u ovom slucaju process_login) i pise u body 
 
-    
 
 app.use(express.static('./public')); //get request goes here to look for file
 
