@@ -45,7 +45,7 @@ app.post('/process_login', function (request, response, next) {
     console.log(request.body); //getting the body stuff
     let username_entered = request.body.uname;  //making an object from the input form for username
     let password_entered = request.body.psw; //making an object from the input form for password
-    request.query["uname"] = request.body["uname"]; //adding username to the URL of invoice
+    request.query["uname"] = user_data[username_entered].name; //adding name to the URL of invoice, to personalize it
     if (typeof user_data[username_entered] != 'undefined') { //if the entered username undefined, that means I have it in my data already, so they can proceede to invoice
         if (user_data[username_entered]['password'] == password_entered) {
             response.redirect('invoice.html?' + qs.stringify(request.query));
