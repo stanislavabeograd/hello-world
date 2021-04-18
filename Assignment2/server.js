@@ -26,11 +26,8 @@ app.post('/process_register', function (req, res) {
         user_data[username] = {}; // sets up space for the newuser (empty object)
         user_data[username].password = req.body["psw"]; // alternative reg_data[username].["password"] = 'newpass';
         user_data[username].email = req.body["email"];
-        user_data[username].name = req.body["name"];
-            //checking if the email is already taken
-    if (typeof user_data[username].email != 'undefined') {
-        res.send(`It seems that you are already registered with the following email: ${user_data[username].email}, try <a href ="./login.html">logging in.</a>`);
-}
+        user_data[username].name = req.body["name"]
+
         //convert the updated userdata object to json and write it to the file
         fs.writeFileSync('./user_data.json', JSON.stringify(user_data));
         res.redirect('invoice.html?' + qs.stringify(req.query));
