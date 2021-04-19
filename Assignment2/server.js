@@ -7,6 +7,12 @@ var qs = require('qs');
 var fs = require('fs'); //loading file system
 
 
+let name_re = /^([a-zA-Z]){1,20}$/; //aplhabet characters
+let username_re = /^([a-z0-9_-]){4,10}$/; //aplhanumeric characters
+let password_re = /.{6,}/; //any
+let email_re = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9]{2,3}/; // simple version, modified from https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
+
+
 
 //here I am reading in the user data into an object called user_data
 var user_data_file = './user_data.json';
@@ -21,20 +27,33 @@ app.all('*', function (request, response, next) {
 
 app.post('/process_register', function (req, res) {
     username = req.body.uname;
+    request.query["uname"] = user_data[username_entered].name;
     // adding new user to the object
-    if (typeof user_data[username] == 'undefined') {  
+    if (typeof user_data[username] == 'undefined') {
         user_data[username] = {}; // sets up space for the newuser (empty object)
-        user_data[username].password = req.body["psw"]; // alternative reg_data[username].["password"] = 'newpass';
-        user_data[username].email = req.body["email"];
-        user_data[username].name = req.body["name"]
+        if (name_re.test(req.body["name"]) == false) {
+            res.send(`Entered value for Full Name should have only alphabet characters, please hit back button and revise entry.`);
+        } //testing the name for the regex
+        user_data[username].name = req.body["name"] //saving the entered name in the object
+
+        if (password_re.test(req.body["psw"]) == false) {
+            res.send(`Entered value for name should have minimum 6 characters, please hit back button and revise entry.`); //testing the pass with the regex
+        }
+        user_data[username].password = req.body["psw"]; //saving the entered name in the object
+        if (password_re.test(req.body["email"]) == false) {
+            res.send(`You have entered an invalid email adress, please hit back button and revise`); //testing the pass with the regex
+        }
+        user_data[username].email = req.body["email"]; //saving the email of new user in the object
+
 
         //convert the updated userdata object to json and write it to the file
         fs.writeFileSync('./user_data.json', JSON.stringify(user_data));
         res.redirect('invoice.html?' + qs.stringify(req.query));
     } else {
-        res.send(`${username} is taken`);
+        res.send(`${username} is taken`); //sends the message that the username is taken.
     }
 });
+
 
 
 //this part is processing the login page
@@ -55,45 +74,9 @@ app.post('/process_login', function (request, response, next) {
         response.send(`<h2>${username_entered}</h2> username is not recognized. <br><br> Please go to the <a href="./registration.html"> Registration form </a> to create a profile`);
 
     }
-}); 
-
-
-
-/*
-// processing login
-app.post('/process_login', function (request, response, next) { 
-    console.log(request.query);
-    //check login and password and match database
-  
-    //all good, send to invoice
-    request.query["uname"] = request.body["uname"];
-    response.redirect('invoice.html?' + qs.stringify(request.query));   
 });
 
-// processing registration
-app.post('/', function (request, response, next) { 
-    response.send(request.body);
-});
 
- 
-    user_data = {'uname':'stasa', 'password' : 'car'};
-    post_data = request.body; //gets the data form the post in the variable    
-    if(post_data['uname']){  //check the username if there is some data
-             user = post_data ['uname'];
-             if(user_data['uname'] == user){
-                 response.send(`I recognize you ${user}!`);
-                 return;
-               }  else { 
-                  response.send(`${user} is not a valid`); //comment out if you want to keep them on the page for the wrong input
-                  //response.redirect('./log_in_page.html?username=' +user); //to return them back to the page, puts it in the query string, check the value in qty_texbox in the server. In login treba da im sacuvas podatke u kucicama, ako nije OK log in. 
-                  return;
-               }
-             
-         }
-    //response.send(JSON.stringify(post_data)); 
-        }); //this responds to post request (u ovom slucaju process_login) i pise u body 
-
-*/
 app.use(express.static('./public')); //get request goes here to look for file
 
 app.listen(8080, () => console.log(`listening on port 8080`)); // note the use of an anonymous function here
@@ -104,4 +87,4 @@ function isNonNegInt(q, returnErrors = false) {
     if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
     if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
     return returnErrors ? errors : (errors.length == 0);
-  }
+}
