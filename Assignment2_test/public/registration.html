@@ -8,12 +8,34 @@
     <link rel="stylesheet" href="../css/registration.css">
 
 <script>
+let name_re = /(^[a-z A-Z-]*$){1,20}/; //aplhabet characters 1 - 10
+let username_re = /([a-z0-9]){4,10}/; //aplhanumeric characters 4-10
+let password_re = /.{6,}/; //any string, minimum 6 char long
+let email_re = /([a-zA-Z0-9_.+-])+@([a-zA-Z0-9-])+\.([a-zA-Z0-9]){2,3}/; // simple version testing email, modified from https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
+
+//kako da napravim da izbaciuje alert error 
+function errorMessage(){
+if (username_re.test(req.body["uname"]) == false) {//testing username agains regex
+            alert(`Entered value for USERNAME should have 4-10 alphanumeric characters, please hit back button and revise entry.`);
+        }; //testing the username for the regex
+if (name_re.test(req.body["name"]) == false) {
+          alert(`Entered value for Full Name should have only alphabet characters, please hit back button and revise entry.`);
+        } //testing the name for the regex  
+if (password_re.test(req.body["psw"]) == false) {
+          alert(`Entered value for PASSWORD should have minimum 6 characters, please hit back button and revise entry.`); //testing the pass with the regex
+        }
+  if (email_re.test(req.body["email"]) == false) {
+          alert(`You have entered an invalid EMAIL adress, please hit back button and revise`); //testing the pass with the regex
+        }
+      }
+
+
 
 </script>
 </head>
 <body>
   <script>
-  document.write(`<form action="./process_register${location.search}" method='POST' name="reg">`);
+  document.write(`<form action="./process_register${location.search}" method='POST' name="reg" onlcick=errorMessage();>`);
   </script>      
     <div class="container">
           <h1>Register</h1>
