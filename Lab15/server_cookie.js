@@ -6,6 +6,9 @@ app.use(myParser.urlencoded({ extended: true })); //need to add this to get the 
 var qs = require('qs');
 var fs = require('fs'); //loading file system
 const e = require('express');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 
 //var user_data = require('./user_data.json'); loading the object from the file
 
