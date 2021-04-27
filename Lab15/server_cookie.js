@@ -6,23 +6,10 @@ app.use(myParser.urlencoded({ extended: true })); //need to add this to get the 
 var qs = require('qs');
 var fs = require('fs'); //loading file system
 const e = require('express');
-const cookieParser = require('cookie-parser');
-app.use(cookieParser());
-
 
 //var user_data = require('./user_data.json'); loading the object from the file
 
 //console.log(user_data['stasa']['password']);
-
-//cookies section
-
-app.get('/set_cookies', function (req, res){
-let my_name='Stasa Cvetic'     
-res.cookie('my_name', my_name);//response cookie
-res.send(`Cookie for ${my_name} sent`);
-}
-);
-
 
 var user_data_file = './user_data.json';
 if (fs.existsSync(user_data_file)) {
