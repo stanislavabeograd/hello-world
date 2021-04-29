@@ -8,7 +8,42 @@ var fs = require('fs'); //loading file system
 const e = require('express');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
+var session = require('express-session');
 
+
+//do the cookies ...cookies are always response
+app.get('/set_cookie', function (req, res, next){
+    let my_name = 'Stasa Gardasevic';
+    now= new Date();
+    res.cookie('my_name', my_name, {expire: 5000 + now.getTime()});
+    res.send(`Cookie for ${my_name} sent`)//allows 2 responses, but they are usually sent silently
+    next();
+});
+
+//check if someone is logged in if you do this with username (Assignmnet 2)
+app.get('/use_cookie', function (req, res, next){
+    if (typeof req.cookies["my_name"] != 'undefined'){
+    res.send(`Hello ${req.cookies["my_name"]}!`)//allows 2 responses, but they are usually sent silently
+    next();
+    } else {
+        res.send("I don't know you!")
+    }
+});
+
+
+//sessions
+
+app.use(session({secret: "ITM352 rocks!"}));// gives it a secret to encript it to make sure it is ID we give it
+
+app.get('/set_session', function (req, res, next){
+    res.send(`welcome, your session ID is ${req.session.id}`); //automatski generise ID za sesiju i vezuje data za taj ID
+    next();
+})
+
+app.get('/use_session', function (req, res, next){
+    res.send(`welcome, your session ID is ${req.session.id}`); //automatski generise ID za sesiju i vezuje data za taj ID
+    next();
+})
 
 //var user_data = require('./user_data.json'); loading the object from the file
 
@@ -26,6 +61,7 @@ if (fs.existsSync(user_data_file)) {
 
 
 app.all('*', function (request, response, next) {
+    console.log(request);
     console.log(request.method + ' to path ' + request.path + 'with query' + JSON.stringify(request.query));
     next(); //passing it on to the next who can respond
 }); // this is diagnostic, to see what's the metod, query etc.
@@ -57,13 +93,36 @@ app.get('/test', function (request, response, next) {
 }); // if I get get request, then execute this function
 
 
-/*
-//check if the server has access to your form
-app.post('/process_login', function (request, response, next) { //ovo odgovara na POST u method u html form
-    post_data = request.body; //gets the data form the post in the variable    
-    response.send(post_data);
+
+
+app.post('/process_login', function (request, response, next) {
+    console.log(request.body); //getting the body stuff
+    if(typeof request.session['last_login'] != 'undefined'){
+        console.log('Last login time was ' + request.session['last_login']);
+        request.session['last_login'] = Date();
+    } else{
+        console.log("first time login");
+    }
+    let username_entered = request.body.uname;  //making an object from the input form for username
+    let password_entered = request.body.psw; //making an object from the input form for password
+    
+    if (typeof user_data[username_entered] != 'undefined') { //if the entered username undefined, that means I have it in my data already, so they can proceede to invoice
+        if (user_data[username_entered]['password'] == password_entered) {
+            response.cookie('username')
+            request.query["uname"] = user_data[username_entered].name; //adding name to the URL of invoice, to personalize it
+            response.redirect('invoice.html?' + qs.stringify(request.query));
+            
+        }
+        else {
+            response.send(`${username_entered}, your password is not correct, please re-enter.`);// if the username is not recognized, it sends the message to go back to the registration form
+        }
+    }
+    if (typeof user_data[username_entered] == 'undefined') {// checking if username is there
+        response.send(`<h2>${username_entered}</h2> username is not recognized. <br><br> Please go to the <a href="./registration.html"> Registration form </a> to create a profile`);
+
+    }
+    
 });
-*/
 
 
 
@@ -82,3 +141,4 @@ function isNonNegInt(q, returnErrors = false) {
     if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
     return returnErrors ? errors : (errors.length == 0);
 }
+
