@@ -22,8 +22,10 @@ app.get('/set_cookie', function (req, res, next){
 
 //check if someone is logged in if you do this with username (Assignmnet 2)
 app.get('/use_cookie', function (req, res, next){
-    if (typeof req.cookies["my_name"] != 'undefined'){
-    res.send(`Hello ${req.cookies["my_name"]}!`)//allows 2 responses, but they are usually sent silently
+    if (typeof req.cookies["username"] != 'undefined'){
+        res.cookie('username')
+        let userame = req.cookies["username"];
+    res.send(`${user_data[username].name} is logged in!`)//allows 2 responses, but they are usually sent silently
     next();
     } else {
         res.send("I don't know you!")
@@ -108,9 +110,9 @@ app.post('/process_login', function (request, response, next) {
     
     if (typeof user_data[username_entered] != 'undefined') { //if the entered username undefined, that means I have it in my data already, so they can proceede to invoice
         if (user_data[username_entered]['password'] == password_entered) {
-            response.cookie('username')
+            response.cookie('username', username_entered);
             request.query["uname"] = user_data[username_entered].name; //adding name to the URL of invoice, to personalize it
-            response.redirect('invoice.html?' + qs.stringify(request.query));
+            response.redirect('/login.html');
             
         }
         else {

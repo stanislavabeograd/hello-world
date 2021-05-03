@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strenght of Ties Calculator</title>
+    <title>Courses page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
@@ -22,8 +22,8 @@
 
     <header class="w3-container w3-theme w3-padding" id="myHeader">
         <div class="w3-center">
-            <h1 class="w3-xxxlarge w3-animate-bottom">STRENGTH OF TIES WITH CIS PROFESSORS</h1>
-            <h4>enter the number of classes you took with a professor bellow to calculate strength of ties with them
+            <h1 class="w3-xxxlarge w3-animate-bottom">COURSES YOU HAVE TAKEN</h1>
+            <h4>pick all of the courses you have taken so far
             </h4>
             <form action="" method="GET" name="quantity_form">
                 <div class="w3-padding-32">
@@ -46,7 +46,7 @@
         <main>
             <div class=" w3-row-padding w3-center w3-margin-top">
                     <script>
-                        //this is the loop that prints out the data for each of the professors
+                        //this is the loop that prints out the data for each of the courses, together with the dropdown menu for the semester and the checkbox
                         for (let i in courses) {
                             document.write(`  
             <div class="w3-third">
@@ -56,10 +56,32 @@
                     <img  width="150" height="150" src=${courses[i].image}> 
                     <h3>${courses[i].name}</h3>
                     <p> ${courses[i].description}</p>
-                    <hr>    
-                    <lable> Mark 1 if you have taken this class: <lable> <br>
-                    <input type= "text" size="2" placeholder="0" name= "quantity_textbox${i}" onkeyup="checkQuantityTextbox(this)"> 
-                    <span id="quantity_textbox${i}_message" style="color:red;"></span>
+                   
+                    <p>  <label for="semester"><b>Semester:</b></label>
+                    <select id="semester" name="cars">
+                    <option value="s21">Spring 2021</option>
+                    <option value="f20">Fall 2020</option>
+                    <option value="s20">Spring 2020</option>
+                    <option value="f19">Fall 2019</option>
+                    <option value="s19">Spring 2019</option>
+                    <option value="f18">Fall 2018</option>
+                    <option value="s18">Spring 2018</option>
+                    <option value="f17">Fall 2017</option>
+                    <option value="s17">Spring 2017</option>
+                    <option value="f16">Fall 2016</option>
+                    <option value="s16">Spring 2016</option>
+                    <option value="f15">Fall 2015</option>
+                    <option value="s15">Spring 2015</option>
+                    <option value="f14">Fall 2014</option>
+                    <option value="s14">Spring 2014</option>
+                    <option value="f13">Fall 2013</option>
+                    <option value="s13">Spring 2013</option>
+                    <option value="f12">Fall 2012</option>
+                    <option value="s12">Spring 2012</option>
+                    </select>
+                    <hr> 
+                    <p> Check the box if you have taken this course </p> 
+                    <input type="checkbox" id="taken" name="taken" value="taken">  
                     </p>
                     <br>               
                 </section>

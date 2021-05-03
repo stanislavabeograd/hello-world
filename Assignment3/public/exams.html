@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exams page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <script src="./exams.js"> //here I have loded the data on exams
+        //the look/css of the page is one of the W3Schools templates, links and stylesheets are above
+    </script>
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header class="w3-container w3-theme w3-padding" id="myHeader">
+        <div class="w3-center">
+            <h1 class="w3-xxxlarge w3-animate-bottom">PICK THE EXAMS YOU HAVE TAKEN</h1>
+
+            <form action="" method="GET" name="exams_form">
+                <div class="w3-padding-32">
+                    <input type="submit" value="ADD TO PROFILE" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal"
+                        style="font-weight:900;" name="calculate_submit" } ">
+
+                </div>
+        </div>
+    </header>
+    <div>
+        <main>
+            <div class=" w3-row-padding w3-center w3-margin-top">
+                    <script>
+                        //this is the loop that prints out the data for each of the exams, including the dropdown menu for the semester
+                        for (let i in exams) {
+                            document.write(`  
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+
+                    <br>
+                    <img  width="150" height="150" src=${exams[i].image}> 
+                    <h3>${exams[i].name}</h3>
+                    <p> ${exams[i].members}</p>
+                    <p>  <label for="semester"><b>Semester:</b></label>
+                    <select id="semester" name="cars">
+                    <option value="s21">Spring 2021</option>
+                    <option value="f20">Fall 2020</option>
+                    <option value="s20">Spring 2020</option>
+                    <option value="f19">Fall 2019</option>
+                    <option value="s19">Spring 2019</option>
+                    <option value="f18">Fall 2018</option>
+                    <option value="s18">Spring 2018</option>
+                    <option value="f17">Fall 2017</option>
+                    <option value="s17">Spring 2017</option>
+                    <option value="f16">Fall 2016</option>
+                    <option value="s16">Spring 2016</option>
+                    <option value="f15">Fall 2015</option>
+                    <option value="s15">Spring 2015</option>
+                    <option value="f14">Fall 2014</option>
+                    <option value="s14">Spring 2014</option>
+                    <option value="f13">Fall 2013</option>
+                    <option value="s13">Spring 2013</option>
+                    <option value="f12">Fall 2012</option>
+                    <option value="s12">Spring 2012</option>
+                    </select>
+            <p> Check the box if you have taken this exam: </p> <input type="checkbox" id="taken" name="taken" value="taken">  
+                    </p>
+                    <hr>    
+                    </p>
+                    <br>               
+                </section>
+            </div> 
+</div>
+                `);
+                        };
+                    </script>
+
+                </div>
+                </main>
+            </form>
+
+
+</body>
+
+</html>
+<script>
+    var params = (new URL(document.location)).searchParams; //looking for the search paramaters
+    if (params.has("calculate_submit")) { // here I check if the button submit was clicked, not to display the alerts each time the page was loaded
+        var has_errors = false; //setting up the value for errors
+        var has_quantities = false; // setting up the value for the quanities
+        for (var i in exams) {
+            qty = params.get(`quantity_textbox${i}`);
+            quantity_form['quantity_textbox' + i].value = qty; //puts back in the textbox the data from the query
+            checkQuantityTextbox(quantity_form['quantity_textbox' + i]);
+            if (qty > 0) { has_quantities = true; } //showing that the quantities is only if it's bigger than 0
+            if (isNonNegInt(qty) == false) //only for those that have inputed valid number of classes
+            {
+                has_errors = true;
+            }
+        }
+        if (has_errors == true) {
+            alert("Invalid quantities."); //blocking if the quantities are not correct with alert
+        }
+        else if (has_quantities == false) {
+            alert("Pick some classes quantities!"); //if there is no entry in texboxes
+        }
+        else { window.location.href = "./login.html" + location.search } //go to invoice if quantities are correct
+    }
+</script>
