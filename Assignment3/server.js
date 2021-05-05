@@ -5,6 +5,9 @@ const { response } = require('express');
 app.use(myParser.urlencoded({ extended: true })); //need to add this
 var qs = require('qs');
 var fs = require('fs'); //loading file system
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+var session = require('express-session');
 
 
 let name_re = /(^[a-z A-Z-]*$){1,20}/; //aplhabet characters 1 - 10
@@ -70,14 +73,13 @@ app.post('/process_login', function (request, response, next) {
     if (typeof user_data[username_entered] != 'undefined') { //if the entered username undefined, that means I have it in my data already, so they can proceede to invoice
         if (user_data[username_entered]['password'] == password_entered) {
             request.query["uname"] = user_data[username_entered].name; //adding name to the URL of invoice, to personalize it
-            response.redirect('invoice.html?' + qs.stringify(request.query));
-            
+            response.redirect('invoice.html?' + qs.stringify(request.query)); 
         }
         else {
             response.send(`${username_entered}, your password is not correct, please re-enter.`);// if the username is not recognized, it sends the message to go back to the registration form
         }
     }
-    if (typeof user_data[username_entered] == 'undefined') {// checking if username is there
+        if (typeof user_data[username_entered] == 'undefined') {// checking if username is there
         response.send(`<h2>${username_entered}</h2> username is not recognized. <br><br> Please go to the <a href="./registration.html"> Registration form </a> to create a profile`);
 
     }
@@ -96,3 +98,10 @@ function isNonNegInt(q, returnErrors = false) {
     if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
     return returnErrors ? errors : (errors.length == 0);
 }
+
+//setting cookies
+
+app.get('/set_cookie', function (req, res, next){
+    res.cookie('username', username);
+    next();
+});

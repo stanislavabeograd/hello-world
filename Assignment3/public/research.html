@@ -16,12 +16,32 @@
 </head>
 
 <body>
+        <!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="/index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Strenght of Ties Calculator</a>
+      <a href="/courses.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Courses</a>
+      <a href="/exams.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Exam Areas</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Research Information</a>
+    </div>
+  
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+      <a href="/index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-padding-large">Ties</a>
+      <a href="/courses.html" class="w3-bar-item w3-button w3-padding-large">Courses</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-padding-large">Research</a>
+    </div>
+  </div>
 
     
       <!-- Header -->
 
     <header class="w3-container w3-theme w3-padding" id="myHeader">
         <div class="w3-center">
+            <br><br>
             <h1 class="w3-xxxlarge w3-animate-bottom">RESEARCH INFORMATION</h1>
             <h4>Enter appropriate categories to describe your research
             </h4>
@@ -39,11 +59,11 @@
     <fieldset>
         <legend><h3>Describe your reserach:</h3></legend>
         <label for="keywords">How would you describe your research using keywords:</label><br>
-        <input type="text" id="keywords" name="keywords" value="keywords"><br><br>
+        <input type="text" id="keywords" name="keywords"><br><br>
         <label for="area">What is your research application area?</label><br>
-        <input type="text" id="area" name="area" value="area"><br><br>
+        <input type="text" id="area" name="area"><br><br>
         <label for="met">What methodologies are you using?</label><br>
-        <input type="met" id="met" name="met" value="metodologies"><br><br>
+        <input type="met" id="met" name="met"><br><br>
     </fieldset>
     <br>
     <fieldset>
@@ -59,10 +79,10 @@
           <option value="8">Health Informatics</option>
           <option value="9">Library and Information Science</option>
           <option value="10">Information Science</option>
-          <option value="11">Other</option>
+          <option value="11">Other</option><br>
 
       </fieldset>
-      
+      <br>
 </main>
 
 </body>

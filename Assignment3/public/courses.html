@@ -17,11 +17,30 @@
 
 <body>
 
-    
+        <!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="/index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Strenght of Ties Calculator</a>
+      <a href="/courses.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Courses</a>
+      <a href="/exams.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Exam Areas</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Research Information</a>
+    </div>
+  
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+      <a href="/index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-padding-large">Ties</a>
+      <a href="/courses.html" class="w3-bar-item w3-button w3-padding-large">Courses</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-padding-large">Research</a>
+    </div>
+  </div>
       <!-- Header -->
 
     <header class="w3-container w3-theme w3-padding" id="myHeader">
         <div class="w3-center">
+            <br><br>
             <h1 class="w3-xxxlarge w3-animate-bottom">COURSES YOU HAVE TAKEN</h1>
             <h4>pick all of the courses you have taken so far
             </h4>
@@ -97,29 +116,10 @@
 
 
 </body>
-
+<footer>
+<div class="w3-padding-32">
+    <a href="/exams.html" class="w3-bar-item w3-button"><input type="button"  value="NEXT PAGE" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal" style="font-weight:900;" name="next">
+</a>
+</div>
+</footer>
 </html>
-<script>
-    var params = (new URL(document.location)).searchParams; //looking for the search paramaters
-    if (params.has("calculate_submit")) { // here I check if the button submit was clicked, not to display the alerts each time the page was loaded
-        var has_errors = false; //setting up the value for errors
-        var has_quantities = false; // setting up the value for the quanities
-        for (var i in professors) {
-            qty = params.get(`quantity_textbox${i}`);
-            quantity_form['quantity_textbox' + i].value = qty; //puts back in the textbox the data from the query
-            checkQuantityTextbox(quantity_form['quantity_textbox' + i]);
-            if (qty > 0) { has_quantities = true; } //showing that the quantities is only if it's bigger than 0
-            if (isNonNegInt(qty) == false) //only for those that have inputed valid number of classes
-            {
-                has_errors = true;
-            }
-        }
-        if (has_errors == true) {
-            alert("Invalid quantities."); //blocking if the quantities are not correct with alert
-        }
-        else if (has_quantities == false) {
-            alert("Pick some classes quantities!"); //if there is no entry in texboxes
-        }
-        else { window.location.href = "./login.html" + location.search } //go to invoice if quantities are correct
-    }
-</script>
