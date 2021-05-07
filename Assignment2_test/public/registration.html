@@ -27,6 +27,7 @@ if (password_re.test(req.body["psw"]) == false) {
   if (email_re.test(req.body["email"]) == false) {
           alert(`You have entered an invalid EMAIL adress, please hit back button and revise`); //testing the pass with the regex
         }
+        else continue; 
       }
 
 
@@ -55,7 +56,7 @@ if (password_re.test(req.body["psw"]) == false) {
           <label for="email"><b>Email</b></label>
           <input type="text" placeholder="Enter Email" name="email" id="email" onchange='this.value=this.value.toLowerCase()' required>
           <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-          <button type="submit" class="registerbtn">Register</button>
+          <button type="submit" class="registerbtn" onclick="errorMessage()">Register</button>
         </div>
       
         <div class="container signin">

@@ -22,6 +22,41 @@ var user_data_file = './user_data.json';
 var file_stats = fs.statSync(user_data_file);
 var user_data = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8')); //gonna read it all as a string in this var.
 
+
+//sessions
+
+app.use(session({secret: "pazidatinekazem"}));// gives it a secret to encript it to make sure it is ID we give it
+
+app.get('/set_session', function (req, res, next){
+    res.send(`welcome, your session ID is ${req.session.id}`); //automatski generise ID za sesiju i vezuje data za taj ID
+    next();
+})
+
+app.get('/use_session', function (req, res, next){
+    res.send(`welcome, your session ID is ${req.session.id}`); //automatski generise ID za sesiju i vezuje data za taj ID
+    next();
+})
+
+//cookies
+
+app.get('/set_cookie', function (req, res, next){
+    res.cookie('my_name', my_name, {expire: 5000 + now.getTime()});
+    res.send(`Cookie for ${my_name} sent`)//allows 2 responses, but they are usually sent silently
+    next();
+});
+
+//check if someone is logged in if you do this with username (Assignmnet 2)
+app.get('/use_cookie', function (req, res, next){
+    if (typeof req.cookies["username"] != 'undefined'){
+        res.cookie('username')
+        let userame = req.cookies["username"];
+    res.send(`${user_data[username].name} is logged in!`)//allows 2 responses, but they are usually sent silently
+    next();
+    } else {
+        res.send("I don't know you!")
+    }
+});
+
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to path ' + request.path + 'with query' + JSON.stringify(request.query));
     next(); //passing it on to the next who can respond
