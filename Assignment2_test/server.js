@@ -26,20 +26,7 @@ app.all('*', function (request, response, next) {
 //this code is processing the registration form and input into the file with all the user data
 
 //testing the alert function
-function errorMessage(){
-    if (username_re.test(req.body["uname"]) == false) {//testing username agains regex
-                alert(`Entered value for USERNAME should have 4-10 alphanumeric characters, please hit back button and revise entry.`);
-            }; //testing the username for the regex
-    if (name_re.test(req.body["name"]) == false) {
-              alert(`Entered value for Full Name should have only alphabet characters, please hit back button and revise entry.`);
-            } //testing the name for the regex  
-    if (password_re.test(req.body["psw"]) == false) {
-              alert(`Entered value for PASSWORD should have minimum 6 characters, please hit back button and revise entry.`); //testing the pass with the regex
-            }
-      if (email_re.test(req.body["email"]) == false) {
-              alert(`You have entered an invalid EMAIL adress, please hit back button and revise`); //testing the pass with the regex
-            } 
-          }
+
 
 app.post('/process_register', function (req, res) {
     username = req.body.uname;

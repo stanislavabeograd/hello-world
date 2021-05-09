@@ -7,13 +7,8 @@ var qs = require('qs');
 var fs = require('fs'); //loading file system
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
+app.use(myParser.urlencoded({ extended: true }));
 var session = require('express-session');
-
-
-let name_re = /(^[a-z A-Z-]*$){1,20}/; //aplhabet characters 1 - 10
-let username_re = /([a-z0-9]){4,10}/; //aplhanumeric characters 4-10
-let password_re = /.{6,}/; //any string, minimum 6 char long
-let email_re = /([a-zA-Z0-9_.+-])+@([a-zA-Z0-9-])+\.([a-zA-Z0-9]){2,3}/; // simple version testing email, modified from https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
 
 
 
@@ -22,20 +17,22 @@ var user_data_file = './user_data.json';
 var file_stats = fs.statSync(user_data_file);
 var user_data = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8')); //gonna read it all as a string in this var.
 
+app.use(session({secret: "ITM352 rocks!"}));// gives it a secret to encript it to make sure it is ID we give it
+
+//Session and Profile (shopping cart) copied from the Assignment 3 examples code, intitializing an object to store the cart in the session. 
+app.all('*', function (request, response, next) {
+    console.log(`Got a ${request.method} to path ${request.path}`);
+    if(typeof request.session.profile == 'undefined') { request.session.profile = {}; } 
+    next();
+});
+
 
 //sessions
-
-app.use(session({secret: "pazidatinekazem"}));// gives it a secret to encript it to make sure it is ID we give it
-
 app.get('/set_session', function (req, res, next){
-    res.send(`welcome, your session ID is ${req.session.id}`); //automatski generise ID za sesiju i vezuje data za taj ID
+    res.send(`welcome, your session ID is ${req.session.id}`); //authomatically generating session ID and binds all to that session
     next();
 })
 
-app.get('/use_session', function (req, res, next){
-    res.send(`welcome, your session ID is ${req.session.id}`); //automatski generise ID za sesiju i vezuje data za taj ID
-    next();
-})
 
 //cookies
 
@@ -57,13 +54,17 @@ app.get('/use_cookie', function (req, res, next){
     }
 });
 
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to path ' + request.path + 'with query' + JSON.stringify(request.query));
-    next(); //passing it on to the next who can respond
-}); // this is diagnostic, to see what's the metod, query etc
-//this code is processing the registration form and input into the file with all the user data
 
 
+
+
+// regex to test the validity of entry for the registration
+let name_re = /(^[a-z A-Z-]*$){1,20}/; //aplhabet characters 1 - 10
+let username_re = /([a-z0-9]){4,10}/; //aplhanumeric characters 4-10
+let password_re = /.{6,}/; //any string, minimum 6 char long
+let email_re = /([a-zA-Z0-9_.+-])+@([a-zA-Z0-9-])+\.([a-zA-Z0-9]){2,3}/; // simple version testing email, modified from https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
+
+//registration processing
 app.post('/process_register', function (req, res) {
     username = req.body.uname;
     // adding new user to the object
