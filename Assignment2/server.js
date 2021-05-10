@@ -32,7 +32,7 @@ app.post('/process_register', function (req, res) {
     if (typeof user_data[username] == 'undefined') {
         
         if (username_re.test(req.body["uname"]) == false) {//testing username agains regex
-            res.send(`Entered value for USERNAME should have 4-10 alphanumeric characters, please hit back button and revise entry.`);
+            res.send(alert(`Entered value for USERNAME should have 4-10 alphanumeric characters, please hit back button and revise entry.`);
         } //testing the username for the regex
         user_data[username] = {}; // sets up space for the newuser (empty object)
         
