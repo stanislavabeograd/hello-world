@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var myParser = require("body-parser"); //takes a body of the request and creates an object of the data in it (POST data)
-const { response } = require('express');
 app.use(myParser.urlencoded({ extended: true })); //need to add this
 var qs = require('qs');
 var fs = require('fs'); //loading file system
@@ -17,7 +16,12 @@ var user_data_file = './user_data.json';
 var file_stats = fs.statSync(user_data_file);
 var user_data = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8')); //gonna read it all as a string in this var.
 
-app.use(session({secret: "ITM352 rocks!"}));// gives it a secret to encript it to make sure it is ID we give it
+app.use(session({
+    secret: "ITM352 rocks!", // gives it a secret to encript it to make sure it is ID we give it
+    cookie: {maxAge: 1000 * 60 * 60 * 24} //makes session expire in 1 day * 24 hr/1day * 60 * min/ 1hr taken from video tutorial https://www.youtube.com/watch?v=J1qXK66k1y4
+}));
+
+
 
 //Session and Profile (shopping cart) copied from the Assignment 3 examples code, intitializing an object to store the cart in the session. 
 app.all('*', function (request, response, next) {
@@ -27,25 +31,43 @@ app.all('*', function (request, response, next) {
 });
 
 
-//sessions
-app.get('/set_session', function (req, res, next){
-    res.send(`welcome, your session ID is ${req.session.id}`); //authomatically generating session ID and binds all to that session
-    next();
-})
-
-
-//cookies
-
-app.get('/set_cookie', function (req, res, next){
-    res.cookie('my_name', my_name, {expire: 5000 + now.getTime()});
-    res.send(`Cookie for ${my_name} sent`)//allows 2 responses, but they are usually sent silently
-    next();
+//adding forms for each of the page 
+app.get('/add_ties', function (req, res, next){
+    req.session.ties = req.query; //adding the form to the session to use it in the profile
+    res.redirect("./courses.html");
 });
+
+app.get('/add_courses', function (req, res, next){
+    req.session.courses = req.query; //adding the form to the session to use it in the profile
+    console.log(req.session.courses);
+    res.redirect("./exams.html");
+});
+
+app.get('/add_exams', function (req, res, next){
+    req.session.exams = req.query; //adding the form to the session to use it in the profile
+    console.log(req.session.exams);
+    res.redirect("./research.html");
+});
+
+app.get('/add_research', function (req, res, next){
+    req.session.reserach = req.query; //adding the form to the session to use it in the profile
+    console.log(req.session.reserach);
+    res.redirect("./profile");
+});
+
+
+// profile routes
+app.get('/profile',function (req, res, next){
+    var ties_data = req.session.ties; //getting data out of session
+    var exams_data = req.session.exams;
+    res.redirect('./invoice.html?'+qs.stringify(ties_data));
+});
+
 
 //check if someone is logged in if you do this with username (Assignmnet 2)
 app.get('/use_cookie', function (req, res, next){
     if (typeof req.cookies["username"] != 'undefined'){
-        res.cookie('username')
+        res.cookie('username');
         let userame = req.cookies["username"];
     res.send(`${user_data[username].name} is logged in!`)//allows 2 responses, but they are usually sent silently
     next();
@@ -54,7 +76,13 @@ app.get('/use_cookie', function (req, res, next){
     }
 });
 
-
+//I don't know how to do this.
+app.get("/add_to_cart", function (request, response) {
+    var products_key = request.query['products_key']; // get the product key sent from the form post
+    var quantities = request.query['quantities'].map(Number); // Get quantities from the form post and convert strings from form post to numbers
+    request.session.cart[products_key] = quantities; // store the quantities array in the session cart object with the same products_key. 
+    response.redirect('./cart.html');
+});
 
 
 
@@ -102,12 +130,13 @@ app.post('/process_register', function (req, res) {
 
 //this part is processing the login page
 app.post('/process_login', function (request, response, next) {
-    console.log(request.body); //getting the body stuff
+    console.log(request.body); //getting the body stuf
     let username_entered = request.body.uname;  //making an object from the input form for username
     let password_entered = request.body.psw; //making an object from the input form for password
     
     if (typeof user_data[username_entered] != 'undefined') { //if the entered username undefined, that means I have it in my data already, so they can proceede to invoice
         if (user_data[username_entered]['password'] == password_entered) {
+            response.cookie('username', username_entered);
             request.query["uname"] = user_data[username_entered].name; //adding name to the URL of invoice, to personalize it
             response.redirect('invoice.html?' + qs.stringify(request.query)); 
         }
@@ -135,9 +164,3 @@ function isNonNegInt(q, returnErrors = false) {
     return returnErrors ? errors : (errors.length == 0);
 }
 
-//setting cookies
-
-app.get('/set_cookie', function (req, res, next){
-    res.cookie('username', username);
-    next();
-});

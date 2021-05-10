@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Methodologies page</title>
+    <title>Resaerch Information</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
@@ -55,7 +55,9 @@
             <h1 class="w3-xxxlarge w3-animate-bottom">RESEARCH INFORMATION</h1>
             <h4>Enter appropriate categories to describe your research
             </h4>
-            <form action="" method="GET" name="research_form">
+            <script>
+              document.write(`<form action='add_research${location.search}' method="GET" name="research_form">`);
+          </script>
                 <div class="w3-padding-32">
                     <input type="submit" value="ADD TO PROFILE" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal"
                         style="font-weight:900;" name="research">
@@ -64,7 +66,7 @@
         </div>
    
     </header>
-    </form>
+    
 <main style="text-align:center">
     <fieldset>
         <legend><h3>Describe your reserach:</h3></legend>
@@ -92,7 +94,7 @@
           <option value="11">Other</option><br>
 
       </fieldset>
-      <br>
+    </form>
 </main>
 
 </body>
