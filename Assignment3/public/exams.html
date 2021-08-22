@@ -17,6 +17,7 @@
     <script src="./exams.js"> //here I have loded the data on exams
         //the look/css of the page is one of the W3Schools templates, links and stylesheets are above
     </script>
+    <script src="./scripts.js"></script>
     <script>
         let params = (new URL(document.location)).searchParams;
     </script>
@@ -39,9 +40,16 @@
             <a href="/research.html"
                 class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Research Information</a>
             <div class="topnav-right">
-                <a href="/..." class="w3-bar-item w3-button w3-padding-large">Profile</a>
-                <a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in</a>
-                <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>
+                <a href="/profile" class="w3-bar-item w3-button w3-padding-large">Profile</a>
+                <script>
+                    if (getCookie("username") != "") {
+                        document.write(`<a href="/index.html" onclick = "setCookie('username', '', 0)" class="w3-bar-item w3-button w3-padding-large">Log out ${getCookie("username")} </a>`);
+                    }
+                    else {
+                        document.write(`<a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in </a> <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>`);
+                    }
+                </script>
+
             </div>
         </div>
 
@@ -51,6 +59,14 @@
             <a href="/ties.html" class="w3-bar-item w3-button w3-padding-large">Ties</a>
             <a href="/courses.html" class="w3-bar-item w3-button w3-padding-large">Courses</a>
             <a href="/research.html" class="w3-bar-item w3-button w3-padding-large">Research</a>
+            <script>
+                if (getCookie("username") != "") {
+                    document.write(`<a href="/index.html" onclick = "setCookie('username', '', 0)" class="w3-bar-item w3-button w3-padding-large">Log out ${getCookie("username")} </a>`);
+                }
+                else {
+                    document.write(`<a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in </a> <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>`);
+                }
+            </script>
         </div>
     </div>
 
@@ -76,7 +92,7 @@
             <div class=" w3-row-padding w3-center w3-margin-top">
                 <script>
                     //this is the loop that prints out the data for each of the exams, including the dropdown menu for the semester
-                    for (let i in exams) {
+                    for (i = 0; i <= exams.length; i++) {
                         document.write(`  
             <div class="w3-third">
             <div class="w3-card w3-container" style="min-height:460px">
@@ -85,33 +101,31 @@
                     <img  width="150" height="150" src=${exams[i].image}> 
                     <h3>${exams[i].name}</h3>
                     <p> ${exams[i].members}</p>
-                    <p>  <label for="semester"><b>Semester:</b></label>
-                    <select id="semester${[i]}" name="semester">
+                    <p>  <label for="semesterX"><b>Semester:</b></label>
+                    <select id="semesterX${[i]}" name="semesterX${[i]}">
                     <option value="none" selected disabled>Select</option>
-                    <option value="s21">Spring 2021</option>
-                    <option value="f20">Fall 2020</option>
-                    <option value="s20">Spring 2020</option>
-                    <option value="f19">Fall 2019</option>
-                    <option value="s19">Spring 2019</option>
-                    <option value="f18">Fall 2018</option>
-                    <option value="s18">Spring 2018</option>
-                    <option value="f17">Fall 2017</option>
-                    <option value="s17">Spring 2017</option>
-                    <option value="f16">Fall 2016</option>
+                    <option value="Spring 2021">Spring 2021</option>
+                    <option value="Fall 2020">Fall 2020</option>
+                    <option value="Spring 2020">Spring 2020</option>
+                    <option value="Fall 2019">Fall 2019</option>
+                    <option value="Spring 2019">Spring 2019</option>
+                    <option value="Fall 2018">Fall 2018</option>
+                    <option value="Spring 2018">Spring 2018</option>
+                    <option value="Fall 2017">Fall 2017</option>
+                    <option value="Spring 2017">Spring 2017</option>
+                    <option value="Fall 2016">Fall 2016</option>
                     <option value="s16">Spring 2016</option>
-                    <option value="f15">Fall 2015</option>
-                    <option value="s15">Spring 2015</option>
-                    <option value="f14">Fall 2014</option>
-                    <option value="s14">Spring 2014</option>
-                    <option value="f13">Fall 2013</option>
-                    <option value="s13">Spring 2013</option>
-                    <option value="f12">Fall 2012</option>
-                    <option value="s12">Spring 2012</option>
+                    <option value="Fall 2015">Fall 2015</option>
+                    <option value="Spring 2015">Spring 2015</option>
+                    <option value="Fall 2014">Fall 2014</option>
+                    <option value="Spring 2014">Spring 2014</option>
+                    <option value="Fall 2013">Fall 2013</option>
+                    <option value="Spring 2013">Spring 2013</option>
+                    <option value="Fall 2012">Fall 2012</option>
+                    <option value="Spring 2012">Spring 2012</option>
                     </select>
             <p> Check the box if you have taken this exam: </p> 
-            <input type="checkbox" id="taken${[i]}" name="taken">  
-            <p> Primary exam: </p> <input type="checkbox" id="primary" name="primary" value="primary">  
-                    </p>
+            <input type="checkbox" id="taken${[i]}" name="taken${[i]}">  
                     <hr>    
                     </p>
                     <br>               

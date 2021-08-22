@@ -1,111 +1,197 @@
-<script>
-
-  //we get a variable that looks for the search query in URL 
-  var params = (new URL(document.location)).searchParams;
-
-  //function looking for non neative int
-  function isNonNegInt(q, returnErrors = false) {
-    var errors = []; // assume no errors at first
-    if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
-    if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
-    if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
-    return returnErrors ? errors : (errors.length == 0);
-  }
-
-
-</script>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results of the calculation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <title>Profile</title>
+  <script src="scripts.js"></script>
   <script src="professors.js"></script>
+  <script src="exams.js"></script>
+  <script src="courses.js"></script>
+  <style>
+    .topnav-right {
+      float: right;
+    }
+  </style>
 </head>
+<body style="background-color:rgb(233, 233, 204)"></body>
 
-<body style="background-color:rgb(233, 233, 204)">
-  <h1 align="center"> THE RESULT OF THE CALCULATION FOR:</h1>
-  <h1 align="center"> <script>document.write(params.get('uname'));</script> </h1>
-  <br>
-  <br>
-  <table border="2" align="center">
-    <tbody>
-      <tr>
-        <th style="text-align: center;" width="43%">Professor</th>
-        <th style="text-align: center;" width="11%">Department</th>
-        <th style="text-align: center;" width="13%">Number of classes</th>
-        <th style="text-align: center;" width="54%">Strenght of tie</th>
-      </tr>
+  <div class="w3-top">
+    <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+        href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="/index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Strenght of
+        Ties Calculator</a>
+      <a href="/courses.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Courses</a>
+      <a href="/exams.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Exam
+        Areas</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Research
+        Information</a>
+      <div class="topnav-right">
+        <a href="/profile" class="w3-bar-item w3-button w3-padding-large">Profile</a>
+        <script>
+          if (getCookie("username") != ""){
+        document.write(`<a href="/index.html" onclick = "setCookie('username', '', 0)" class="w3-bar-item w3-button w3-padding-large">Log out ${getCookie("username")} </a>`);}
+           else {
+        document.write(`<a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in </a> <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>`);}
+        </script>
+        
+      </div>
+    </div>
 
-      <script>
-        //in this function I am "calculating" the strenght of ties based on the number of classes a student took with a professor to print them out in invoice
-        function strength_of_ties() {
-          var i;
-          for (i = 0; i < professors.length; i++) {
-            if (isNonNegInt(params.get('quantity_textbox' + i))) { //looking only for non neg int in text boxes to print out
-              if (params.get('quantity_textbox' + i) == 1) {
-                document.getElementById(i).innerHTML = "weak tie";
-              }
-              else if (params.get('quantity_textbox' + i) == 2) {
-                document.getElementById(i).innerHTML = "tie";
-              }
-              else if (params.get('quantity_textbox' + i) >= 3) {
-                document.getElementById(i).innerHTML = "strong tie";
-              }
+
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+      <a href="/index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-padding-large">Ties</a>
+      <a href="/courses.html" class="w3-bar-item w3-button w3-padding-large">Courses</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-padding-large">Research</a>
+    </div>
+  </div>
+  <div id="print">
+    <br><br><br>
+    <h1 align="center"> YOUR ACADEMIC PROFILE:</h1>
+    <h2 align="center">
+      <script> //printing out the name of the logged in person
+        if (getCookie("username") == '') {
+          document.write("Please, log in or register to save your profile data")
+        }
+        else {
+          document.write(getCookie("username"));
+        }
+      </script>
+    </h2>
+    <br>
+    <br>
+
+    <table border="2">
+      <h3> <b> Result of the strenght of ties calculation </b></h3>
+      <br>
+      <tbody>
+        <tr>
+          <th style="text-align: center;" width="43%">Professor</th>
+          <th style="text-align: center;" width="11%">Department</th>
+          <th style="text-align: center;" width="13%">Number of classes</th>
+          <th style="text-align: center;" width="54%">Strenght of tie</th>
+        </tr>
+
+        <script>
+          //in this function I am "calculating" the strenght of ties based on the number of classes a student took with a professor to print them out in invoice
+          function strength_of_ties() {
+            var i;
+            for (i = 0; i < professors.length; i++) {
+ //looking only for int in text boxes to print out calculation of ties
+                if (params.get('quantity_textbox' + i) == 1) {
+                  document.getElementById(i).innerHTML = "weak tie";
+                }
+                else if (params.get('quantity_textbox' + i) == 2) {
+                  document.getElementById(i).innerHTML = "tie";
+                }
+                else if (params.get('quantity_textbox' + i) >= 3) {
+                  document.getElementById(i).innerHTML = "strong tie";
+                }
             }
           }
-        }
 
-        // this is function that makes rows of ties calculation
-        function generate_item_rows() {
-          classes_deparment_count = {}; //here is initiated the object that will group all the counts of classes per deparment
-          for (var i in professors) {
-            if (params.get('quantity_textbox' + i) > 0) { //only for those that have inputed valid number of classes
-              if (typeof classes_deparment_count[professors[i].department] == "undefined") {//if there is no entry in the texbox, set it to 0
-                classes_deparment_count[professors[i].department] = 0;
-              }
-              classes_deparment_count[professors[i].department] += parseInt(params.get('quantity_textbox' + i)); //add the course numbers up based on the department of the professor
-         //bellow I am looping to print out the form based o the professors object
-              document.write(`
+          // this is function that makes rows of ties calculation
+          function generate_item_rows() {
+            classes_deparment_count = {}; //here is initiated the object that will group all the counts of classes per deparment
+            for (var i in professors) {
+              if (params.get('quantity_textbox' + i) > 0) { //only for those that have inputed valid number of classes
+                if (typeof classes_deparment_count[professors[i].department] == "undefined") {//if there is no entry in the texbox, set it to 0
+                  classes_deparment_count[professors[i].department] = 0;
+                }
+                classes_deparment_count[professors[i].department] += parseInt(params.get('quantity_textbox' + i)); //add the course numbers up based on the department of the professor
+                //bellow I am looping to print out the form based o the professors object
+
+
+                document.write(`
+           <p>  
               <tr>
                 <td style="text-align: center; width="30%">${professors[i].name}</td>
                 <td style="text-align: center; width="20%">${professors[i].department}</td>
                 <td style="text-align: center; align="center" width="11%">${params.get('quantity_textbox' + i)} <br></td>
                 <td style="text-align: center; align="center" width="11%" id=${i} ><br></td>
               </tr>
+          </p>
             `)
+
+              }
             }
-
           }
-        }
-
-        generate_item_rows(); // here I am calling these functions I made above
-        strength_of_ties()
+          generate_item_rows(); // here I am calling these functions I made above
+          strength_of_ties()
 
 
-
-      </script>
-  </table>
-  <p>
-    <br>
-    <br>
-  <h3 align="center"> You have taken the follwing number of classes withing these departments: </h3> <br>
-  <h4 align="center">
+        </script>
+    </table>
+    <p>
+      <br>
+      <br>
+    <h3> <b> You have taken the follwing number of classes withing these departments: </b></h3> <br>
     <script>
 
       //this code loops over the object that counts the number of classes and prints out that count
       for (dept in classes_deparment_count) {
         document.write(dept + ":" + classes_deparment_count[dept] + "<br>");
       }
+      //this code prints out the courses taken
+      document.write(` <h3> <b> You took following courses:</b> </h3>`)
+      for (var i in courses) {
+        if (params.get('semester' + i) != null) {
+          document.write(`${courses[i].name} in ${params.get('semester' + i)}<br>`);
+        }
+      }
+
+      //this code prints out the exams taken
+      document.write(` <h3> <b> You took following exams:</b> </h3>`)
+      for (var i in exams) {
+        if (params.get('semesterX' + i) != null) {
+          document.write(`${exams[i].name} in ${params.get('semesterX' + i)}<br>`);
+        }
+      }
+
+      //this code prints out research information 
+      document.write(` <h3> <b> You have entered following information regarding your research:</b> </h3>`)
+      if (params.get('keywords') != null){
+      document.write(`Research keywords: ${params.get('keywords')}<br>`); 
+      };
+      if (params.get('area') != null){
+      document.write(`Application area: ${params.get('area')}<br>`);}
+      if (params.get('met') != null) {
+        document.write(`Methodology: ${params.get('met')} <br>`);
+      }
+      if (params.get('domain') != null) {
+        document.write(`Domain: ${params.get('domain')}`);
+      }
+        
+
+
     </script>
-  </h4>
-  </p>
-  <p></p>
-
-</p>
-</body>
-
+    </p>
+    <p></p>
+  </div>
+  <button onclick = "email_profile()">Email Profile</button>
+    </p>
+  </body>
+<footer>
+  <h4 style="text-align: center">To modify your ACADEMIC PROFILE, please visit the pages and edit there<h4>
+</footer>
 
 </html>
+<script>
+  function email_profile(){
+    fetch('email_profile', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({"email_data": encodeURIComponent(document.getElementById('print'))})
+    })
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+  }
+</script>

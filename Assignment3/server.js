@@ -1,11 +1,11 @@
 var express = require('express');
 var app = express();
 var myParser = require("body-parser"); //takes a body of the request and creates an object of the data in it (POST data)
-app.use(myParser.urlencoded({ extended: true })); //need to add this
 var qs = require('qs');
 var fs = require('fs'); //loading file system
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
+app.use(myParser.json());
 app.use(myParser.urlencoded({ extended: true }));
 var session = require('express-session');
 
@@ -13,7 +13,6 @@ var session = require('express-session');
 
 //here I am reading in the user data into an object called user_data
 var user_data_file = './user_data.json';
-var file_stats = fs.statSync(user_data_file);
 var user_data = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8')); //gonna read it all as a string in this var.
 
 app.use(session({
@@ -25,7 +24,6 @@ app.use(session({
 
 //Session and Profile (shopping cart) copied from the Assignment 3 examples code, intitializing an object to store the cart in the session. 
 app.all('*', function (request, response, next) {
-    console.log(`Got a ${request.method} to path ${request.path}`);
     if(typeof request.session.profile == 'undefined') { request.session.profile = {}; } 
     next();
 });
@@ -56,34 +54,39 @@ app.get('/add_research', function (req, res, next){
 });
 
 
-// profile routes
+// profile data added from the previous pages data and saved in session
 app.get('/profile',function (req, res, next){
     var ties_data = req.session.ties; //getting data out of session
     var exams_data = req.session.exams;
-    res.redirect('./invoice.html?'+qs.stringify(ties_data));
+    var reserach_data = req.session.reserach;
+    var courses_data = req.session.courses;
+    var all_data = Object.assign(ties_data,exams_data,courses_data,reserach_data);
+    console.log(all_data);
+    res.redirect(`./invoice.html?${qs.stringify(all_data)}`);
 });
 
 
-//check if someone is logged in if you do this with username (Assignmnet 2)
+
+//check if someone is logged in with cookies
 app.get('/use_cookie', function (req, res, next){
     if (typeof req.cookies["username"] != 'undefined'){
         res.cookie('username');
         let userame = req.cookies["username"];
-    res.send(`${user_data[username].name} is logged in!`)//allows 2 responses, but they are usually sent silently
     next();
     } else {
         res.send("I don't know you!")
     }
 });
 
-//I don't know how to do this.
-app.get("/add_to_cart", function (request, response) {
-    var products_key = request.query['products_key']; // get the product key sent from the form post
-    var quantities = request.query['quantities'].map(Number); // Get quantities from the form post and convert strings from form post to numbers
-    request.session.cart[products_key] = quantities; // store the quantities array in the session cart object with the same products_key. 
-    response.redirect('./cart.html');
+//log-out by clearing cookie
+app.get('/logout', function (req, res, next){
+    res.clearCookie('username');
 });
 
+app.post('/email_profile', function (req, res, next){
+    console.log(req.body);
+    res.send({'message': 'OK'});
+});
 
 
 // regex to test the validity of entry for the registration
@@ -97,17 +100,14 @@ app.post('/process_register', function (req, res) {
     username = req.body.uname;
     // adding new user to the object
     if (typeof user_data[username] == 'undefined') {
-        
         if (username_re.test(req.body["uname"]) == false) {//testing username agains regex
             res.send(`Entered value for USERNAME should have 4-10 alphanumeric characters, please hit back button and revise entry.`);
         } //testing the username for the regex
         user_data[username] = {}; // sets up space for the newuser (empty object)
-        
         if (name_re.test(req.body["name"]) == false) {
             res.send(`Entered value for Full Name should have only alphabet characters, please hit back button and revise entry.`);
         } //testing the name for the regex
         user_data[username].name = req.body["name"] //saving the entered name in the object
-       
         if (password_re.test(req.body["psw"]) == false) {
             res.send(`Entered value for PASSWORD should have minimum 6 characters, please hit back button and revise entry.`); //testing the pass with the regex
         }
@@ -116,11 +116,11 @@ app.post('/process_register', function (req, res) {
             res.send(`You have entered an invalid EMAIL adress, please hit back button and revise`); //testing the pass with the regex
         }
         user_data[username].email = req.body["email"]; //saving the email of new user in the object
-
+        res.cookie('username', username);//adding a cookie to the registration
         req.query["uname"] = user_data[username].name; //adds the name to the query string
         //convert the updated userdata object to json and write it to the file
         fs.writeFileSync('./user_data.json', JSON.stringify(user_data));
-        res.redirect('invoice.html?' + qs.stringify(req.query));
+        res.redirect('./profile');
     } else {
         res.send(`${username} is taken`); //sends the message that the username is taken.
     }
@@ -138,7 +138,7 @@ app.post('/process_login', function (request, response, next) {
         if (user_data[username_entered]['password'] == password_entered) {
             response.cookie('username', username_entered);
             request.query["uname"] = user_data[username_entered].name; //adding name to the URL of invoice, to personalize it
-            response.redirect('invoice.html?' + qs.stringify(request.query)); 
+            response.redirect('profile'); 
         }
         else {
             response.send(`${username_entered}, your password is not correct, please re-enter.`);// if the username is not recognized, it sends the message to go back to the registration form
@@ -146,9 +146,7 @@ app.post('/process_login', function (request, response, next) {
     }
         if (typeof user_data[username_entered] == 'undefined') {// checking if username is there
         response.send(`<h2>${username_entered}</h2> username is not recognized. <br><br> Please go to the <a href="./registration.html"> Registration form </a> to create a profile`);
-
     }
-    
 });
 
 

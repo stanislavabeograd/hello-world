@@ -2,103 +2,124 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resaerch Information</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-    <style>
-        .topnav-right {
-          float: right;
-        }
-    </style>
-    <script src=""> //here I have loded the data on professors
-        //the look/css of the page is one of the W3Schools templates, links and stylesheets are above
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resaerch Information</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <style>
+    .topnav-right {
+      float: right;
+    }
+  </style>
+  <script src="./scripts.js"></script>
 </head>
 
 <body>
-        <!-- Navbar -->
-<div class="w3-top">
+  <!-- Navbar -->
+  <div class="w3-top">
     <div class="w3-bar w3-black w3-card w3-left-align w3-large">
-      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+        href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
       <a href="/index.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
-      <a href="/ties.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Strenght of Ties Calculator</a>
+      <a href="/ties.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Strenght of Ties
+        Calculator</a>
       <a href="/courses.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Courses</a>
       <a href="/exams.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Exam Areas</a>
-      <a href="/research.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Research Information</a>
+      <a href="/research.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Research
+        Information</a>
       <div class="topnav-right">
-        <a href="/..." class="w3-bar-item w3-button w3-padding-large">Profile</a>
-        <a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in</a>
-        <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>
+        <a href="/profile" class="w3-bar-item w3-button w3-padding-large">Profile</a>
+        <script>
+          if (getCookie("username") != "") {
+            document.write(`<a href="/index.html" onclick = "setCookie('username', '', 0)" class="w3-bar-item w3-button w3-padding-large">Log out ${getCookie("username")} </a>`);
+          }
+          else {
+            document.write(`<a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in </a> <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>`);
+          }
+        </script>
+        
       </div>
     </div>
-  
+
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
       <a href="/index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
       <a href="/ties.html" class="w3-bar-item w3-button w3-padding-large">Ties</a>
       <a href="/courses.html" class="w3-bar-item w3-button w3-padding-large">Courses</a>
       <a href="/research.html" class="w3-bar-item w3-button w3-padding-large">Research</a>
-        <a href="/..." class="w3-bar-item w3-button w3-padding-large">Profile</a>
+      <a href="/profile" class="w3-bar-item w3-button w3-padding-large">Profile</a>
+      <script>
+        if (getCookie("username") != "") {
+          document.write(`<a href="/index.html" onclick = "setCookie('username', '', 0)" class="w3-bar-item w3-button w3-padding-large">Log out ${getCookie("username")} </a>`);
+        }
+        else {
+          document.write(`<a href="/login.html" class="w3-bar-item w3-button w3-padding-large">Log in </a> 
+          <a href="/registration.html" class="w3-bar-item w3-button w3-padding-large">Register</a>`);
+        }
+      </script>
+      
     </div>
   </div>
+  </div>
+  </div>
 
-    
-      <!-- Header -->
 
-    <header class="w3-container w3-theme w3-padding" id="myHeader">
-        <div class="w3-center">
-            <br><br>
-            <h1 class="w3-xxxlarge w3-animate-bottom">RESEARCH INFORMATION</h1>
-            <h4>Enter appropriate categories to describe your research
-            </h4>
-            <script>
-              document.write(`<form action='add_research${location.search}' method="GET" name="research_form">`);
-          </script>
-                <div class="w3-padding-32">
-                    <input type="submit" value="ADD TO PROFILE" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal"
-                        style="font-weight:900;" name="research">
-                </div>
-                
-        </div>
-   
-    </header>
-    
-<main style="text-align:center">
+  <!-- Header -->
+
+  <header class="w3-container w3-theme w3-padding" id="myHeader">
+    <div class="w3-center">
+      <br><br>
+      <h1 class="w3-xxxlarge w3-animate-bottom">RESEARCH INFORMATION</h1>
+      <h4>Enter appropriate categories to describe your research
+      </h4>
+      <script>
+        document.write(`<form action='add_research${location.search}' method="GET" name="research_form">`);
+      </script>
+      <div class="w3-padding-32">
+        <input type="submit" class="w3-btn w3-xlarge w3-theme-dark w3-hover-teal" value ="ADD TO PROFILE" style="font-weight:900;">
+      </div>
+
+    </div>
+
+  </header>
+
+  <main style="text-align:center">
     <fieldset>
-        <legend><h3>Describe your reserach:</h3></legend>
-        <label for="keywords">How would you describe your research using keywords:</label><br>
-        <input type="text" id="keywords" name="keywords"><br><br>
-        <label for="area">What is your research application area?</label><br>
-        <input type="text" id="area" name="area"><br><br>
-        <label for="met">What methodologies are you using?</label><br>
-        <input type="met" id="met" name="met"><br><br>
+      <legend>
+        <h3>Describe your reserach:</h3>
+      </legend>
+      <label for="keywords">How would you describe your research using keywords:</label><br>
+      <input type="text" id="keywords" name="keywords"><br><br>
+      <label for="area">What is your research application area?</label><br>
+      <input type="text" id="area" name="area"><br><br>
+      <label for="met">What methodologies are you using?</label><br>
+      <input type="met" id="met" name="met"><br><br>
     </fieldset>
     <br>
     <fieldset>
-        <legend></legend><h3>What is your reserach domain? (multiple selection)</h3></legend>
-          <select id="domain" name="domain" multiple>
-          <option value="1">Social Informatics</option>
-          <option value="2">Information Science</option>
-          <option value="3">Communication</option>
-          <option value="4">HCI</option>
-          <option value="5">Computer Sciences</option>
-          <option value="6">Communication Sciences</option>
-          <option value="7">ITM</option>
-          <option value="8">Health Informatics</option>
-          <option value="9">Library and Information Science</option>
-          <option value="10">Information Science</option>
-          <option value="11">Other</option><br>
+      <legend></legend>
+      <h3>What is your reserach domain? (multiple selection)</h3>
+      </legend>
+      <select id="domain" name="domain" multiple>
+        <option value="Social Informatics">Social Informatics</option>
+        <option value="Information Science">Information Science</option>
+        <option value="Communication">Communication</option>
+        <option value="HCI">HCI</option>
+        <option value="Computer Sciences">Computer Sciences</option>
+        <option value="Communication Sciences">Communication Sciences</option>
+        <option value="ITM">ITM</option>
+        <option value="Health Informatics">Health Informatics</option>
+        <option value="Library and Information Science">Library and Information Science</option>
+        <option value="Information Science">Information Science</option>
+        <option value="Other">Other</option><br>
 
-      </fieldset>
+    </fieldset>
     </form>
-</main>
+  </main>
 
 </body>
-
-
 
 </html>
